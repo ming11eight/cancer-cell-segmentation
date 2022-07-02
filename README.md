@@ -16,7 +16,46 @@ img = cv2.imread(path_dir+name)
     ret, img_result2 = cv2.threshold(img_result1, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)
 </code>
 </pre>
+<img src="./img/img1.jpg" width="500" height="380">
+<pre>
+<code>
+kernel = np.ones((1,1),np.uint8)
+opening = cv2.morphologyEx(thresh,cv2.MORPH_OPEN,kernel, iterations = 2)
+sure_bg = cv2.dilate(opening,kernel,iterations=3)
+</code>
+</pre>
+<img src="./img/img2.jpg" width="500" height="380">
+<pre>
+<code>
+dist_transform = cv2.distanceTransform(opening, cv2.DIST_L2, 5)
+result_dist_transform = cv2.normalize(dist_transform, None, 255, 0, cv2.NORM_MINMAX, cv2.CV_8UC1)
+ret, sure_fg = cv2.threshold(dist_transform, 0.03*dist_transform.max(),255, cv2.THRESH_BINARY)
+</code>
+</pre>
+<img src="./img/img3.jpg" width="500" height="380">
+<pre>
+<code>
+sure_fg = np.uint8(sure_fg)
+unknown = cv2.subtract(sure_bg,sure_fg)
+</code>
+</pre>
+<img src="./img/img4.jpg" width="500" height="380">
+<pre>
+<code>
+'''# Marker labelling
+ret, markers = cv2.connectedComponents(sure_fg)
 
+# Add one to all labels so that sure background is not 0, but 1
+markers = markers+
 
+# Now, mark the region of unknown with zero
+markers[unknown==255] = 0
 
-  ![Alt text](./img/watershed_example.jpg "segmentation_example")
+#markers = cv2.watershed(img, markers)
+
+# Implement watershed algorithm
+markers1 = cv2.watershed(img, markers)
+img[markers1 == -1] = [255, 0, 0]'''
+</code>
+</pre>
+![Alt text](./img/watershed_example.jpg "segmentation_example")
