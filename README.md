@@ -1,10 +1,13 @@
 # Automatic-cell-image-classification-with-CNN
 
 ## Preprocessing
-> Segmentation
->    * Using openCV and the Watershade Algorithm
->    * watershed algorithem
->    >  이미지를 Grayscale로 변환하면 각 Pixel의 값(0 ~255)을 지형의 높낮이로 비유한다. 높은 부분을 봉우리, 낮은 부분을 계곡이라고 볼 수 있다. 그곳을 서로 다른 색의 물로 채우다보면 나중에는 물이 섞인다. 따라서 그 부분에 경계선을 만들어 서로 섞이지 않게 하는 방법이 Watershed 알고리즘이다. 바로 그 경계선을 이미지의 구분지점으로 파악하여 이미지 분할을 한다.
+1. Segmentation
+
+    Using openCV and the Watershade Algorithm
+
+ * watershed algorithem
+>  이미지를 Grayscale로 변환하면 각 Pixel의 값(0 ~255)을 지형의 높낮이로 비유한다. 높은 부분을 봉우리, 낮은 부분을 계곡이라고 볼 수 있다. 그곳을 서로 다른 색의 물로 채우다보면 나중에는 물이 섞인다. 따라서 그 부분에 경계선을 만들어 서로 섞이지 않게 하는 방법이 Watershed 알고리즘이다. 바로 그 경계선을 이미지의 구분지점으로 파악하여 이미지 분할을 한다.
+    ! [Alt text](./img/watershed.png)
 <pre>
 <code>
 img = cv2.imread(path_dir+name)
