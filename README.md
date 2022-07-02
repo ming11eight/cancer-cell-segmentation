@@ -14,13 +14,13 @@
 <pre>
 <code>
 img = cv2.imread(path_dir+name)
-    data_count+=1
-    gray = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
+data_count+=1
+gray = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
 
-    ret,img_result1 = cv2.threshold(gray, 130, 255, cv2.THRESH_BINARY | cv2.THRESH_OTSU)
-    img_result1[985:,1262:]=0
-    ##img_result2 = cv2.adaptiveThreshold(img_result1, 255, cv2.ADAPTIVE_THRESH_MEAN_C, cv2.THRESH_BINARY_INV,7,30)
-    ret, img_result2 = cv2.threshold(img_result1, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)
+ret,img_result1 = cv2.threshold(gray, 130, 255, cv2.THRESH_BINARY | cv2.THRESH_OTSU)
+img_result1[985:,1262:]=0
+//img_result2 = cv2.adaptiveThreshold(img_result1, 255, cv2.ADAPTIVE_THRESH_MEAN_C, cv2.THRESH_BINARY_INV,7,30)
+ret, img_result2 = cv2.threshold(img_result1, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)
 </code>
 </pre>
 <img src="./img/img1.jpg" width="500" height="380">
@@ -49,14 +49,18 @@ unknown = cv2.subtract(sure_bg,sure_fg)
 <img src="./img/img4.jpg" width="500" height="380">
 <pre>
 <code>
-# Marker labelling
+// Marker labelling
 ret, markers = cv2.connectedComponents(sure_fg)
-# Add one to all labels so that sure background is not 0, but 1
+
+// Add one to all labels so that sure background is not 0, but 1
 markers = markers+
-# Now, mark the region of unknown with zero
+
+// Now, mark the region of unknown with zero
 markers[unknown==255] = 0
-#markers = cv2.watershed(img, markers)
-# Implement watershed algorithm
+
+// markers = cv2.watershed(img, markers)
+
+// Implement watershed algorithm
 markers1 = cv2.watershed(img, markers)
 img[markers1 == -1] = [255, 0, 0]
 </code>
